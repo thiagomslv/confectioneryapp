@@ -12,4 +12,5 @@ Route::get('/', function () {
 Route::group(['prefix' => 'branches'], function (){
 
     Route::get('/create', [BranchesController::class, 'create']);
+    Route::post('/store', [BranchesController::class, 'store']);
 });
