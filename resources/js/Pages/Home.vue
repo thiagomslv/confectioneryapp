@@ -4,17 +4,13 @@
 
     <div class="cards-box">
 
-        <CardBox title="Cadastro de Filiais" iconType="add-outline" />
-        <CardBox title="Controle de Estoque" iconType="cube-outline"/>
-        <CardBox title="Listar Filiais" iconType="business-outline"/>
-        <CardBox title="Mapa de Filiais" iconType="earth-outline"/>
+        <CardBox title="Cadastro de Filiais" iconType="add-outline" linkRedirect="/branches/create"/>
+        <CardBox title="Controle de Estoque" iconType="cube-outline" linkRedirect="/"/>
+        <CardBox title="Listar Filiais" iconType="business-outline" linkRedirect="/"/>
+        <CardBox title="Mapa de Filiais" iconType="earth-outline" linkRedirect="/"/>
     </div>
-    
-    
 
 </template>
-
-
 
 <script>
 

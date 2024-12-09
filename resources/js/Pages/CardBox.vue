@@ -1,28 +1,45 @@
 <template>
 
-    <div class="card-cnt">
+    <Link :href="linkRedirect">
 
-        <div class="inside-card">
-            <ion-icon :name="iconType"></ion-icon>
-            <span class="card-title">{{ title }}</span>
+        <div class="card-cnt">
+            
+            <div class="inside-card">
+                <ion-icon :name="iconType"></ion-icon>
+                <span class="card-title">{{ title }}</span>
+            </div>
         </div>
-        
 
-    </div>
+    </Link>
 </template>
 
 <script>
+
+import { Link } from '@inertiajs/vue3';
+
 export default {
+
+    components: {
+
+        Link
+    },
 
     props: {
 
         title: String,
-        iconType: String
+        iconType: String,
+        linkRedirect: String
     }
 }
 </script>
 
 <style scoped>
+
+    a{
+
+        text-decoration: none;
+        color: black;
+    }
 
     .card-cnt{
 
@@ -36,10 +53,10 @@ export default {
 
         box-shadow: 0px 0px 20px gray;
         transition: transform .5s;
+        
     }
 
-    .card-cnt:hover{
-        cursor: pointer;        
+    .card-cnt:hover{     
         transform: scale(1.05);
     }
 
