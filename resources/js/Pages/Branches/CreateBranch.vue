@@ -5,8 +5,6 @@
 
     <div class="cnt-add-branch">
 
-        
-
         <form class="max-w-lg mx-auto flex flex-col justify-center" @submit.prevent="submit">
 
             <div v-if="flash.message" class="mb-5">
