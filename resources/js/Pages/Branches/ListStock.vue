@@ -6,22 +6,22 @@
     
     <div class="px-3 mt-10 ">
 
-        <div class="flex justify-between mt-10 ">
+        <div v-if="flash.message" class="mb-2">
+
+            <div id="alert-3" class="flex items-center p-4 mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                </svg>
+                <span class="sr-only">Info</span>
+                <div class="ms-3 text-sm font-medium">
+                    {{ flash.message }}
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-between mt-6 ">
 
             <form @submit.prevent="createProduct" class="max-w-lg w-full flex flex-col justify-center shadow-md sm:rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-gray-400 p-3">
-                
-                <div v-if="flash.message" class="mb-5">
-
-                    <div id="alert-3" class="flex items-center p-4 mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
-                        <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                        </svg>
-                        <span class="sr-only">Info</span>
-                        <div class="ms-3 text-sm font-medium">
-                            {{ flash.message }}
-                        </div>
-                    </div>
-                </div>
 
                 <h1 class="text-center">Cadastrar Produto</h1>
 
@@ -49,6 +49,10 @@
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="px-6 py-3">
+                            ID
+                        </th>
+
+                        <th scope="col" class="px-6 py-3">
                             Nome do produto
                         </th>
                         <th scope="col" class="px-6 py-3">
@@ -61,6 +65,11 @@
                 </thead>
                 <tbody>
                     <tr v-for="item in stock" :key="item.id" class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ item.id }}
+                        </th>
+
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{ item.name }}
                         </th>
@@ -68,10 +77,17 @@
                             <b>{{ item.amount }}</b>
                         </td>
 
-                        <td class="px-6 py-4">
-                            <button type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Adicionar +1</button>
-                            <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Retirar -1</button>
-                            <button type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Remover do estoque</button>
+                        <td class="px-6 py-4 flex justify-center">
+
+                            <form @submit.prevent="changeAmount(item.id, 1)">
+                                <button type="submit" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Adicionar +1</button>
+                            </form>
+                            
+                            <form @submit.prevent="changeAmount(item.id, -1)">
+                                <button type="submit" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Retirar -1</button>
+                            </form>
+                            
+                            <!-- <button type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Remover do estoque</button> -->
                         </td>
                     </tr>
                     <!-- <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
@@ -114,6 +130,14 @@
     function createProduct() {
         
         router.post('/branches/stock/store', form_AddProduct)
+    }
+
+    function changeAmount(productId, qnt){
+
+        router.post(`/branches/stock/update/${productId}`, {
+
+            qnt
+        })
     }
 
 </script>

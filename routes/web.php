@@ -21,5 +21,6 @@ Route::group(['prefix' => 'branches'], function (){
         Route::get('/show/{id}', [StockController::class, 'show'])->name('branches.stock.show');
 
         Route::post('/store', [StockController::class, 'store'])->name('branches.stock.store');
+        Route::post('/update/{id}', [StockController::class, 'update'])->name('branches.stock.update');
     });
 });

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateAmountProductRequest;
 
 use App\Models\Branch;
 use App\Models\Product;
@@ -61,7 +62,7 @@ class StockController extends Controller
             return redirect()->route('branches.stock')->with('message', 'Filial não encontrada!');
         }
 
-        $stock = $branch->stock()->get();
+        $stock = $branch->stock()->orderBy('id')->get();
 
         return Inertia::render('Branches/ListStock', ['stock' => $stock, 'branch_id' => $id]);
     }
@@ -77,9 +78,20 @@ class StockController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateAmountProductRequest $request, string $id)
     {
-        //
+        $qnt = (int) request('qnt');
+
+        $product = Product::find($id);
+
+        $res = $product->amount + $qnt;
+        if($res >= 0){
+
+            $product->amount = $res;
+            $product->save();
+        } 
+
+        return back()->with('message', 'Quantidade atualizada!');
     }
 
     /**
