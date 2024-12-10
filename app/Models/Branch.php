@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+use App\Models\Product;
 
 class Branch extends Model
 {
@@ -14,6 +17,11 @@ class Branch extends Model
         'phone',
         'location',
     ];
+
+    public function stock(): HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
 
     public function getLocationAttribute(): mixed
     {
