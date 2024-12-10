@@ -14,7 +14,6 @@
 
 <script>
 
-    import { Head } from '@inertiajs/vue3'
     import CardBox from './CardBox.vue'
 
     export default {
@@ -22,8 +21,6 @@
         name: 'Home',
 
         components: {
-
-            Head,
             CardBox
         }
     }

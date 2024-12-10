@@ -77,16 +77,7 @@
 
 <script>
 
-    import { Head } from '@inertiajs/vue3';
-    import BackButton from '../BackButton.vue';
-
     export default {
-
-        components: {
-
-            BackButton,
-            Head
-        },
 
         props: {
 
