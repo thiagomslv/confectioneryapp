@@ -22,5 +22,7 @@ Route::group(['prefix' => 'branches'], function (){
 
         Route::post('/store', [StockController::class, 'store'])->name('branches.stock.store');
         Route::post('/update/{id}', [StockController::class, 'update'])->name('branches.stock.update');
+
+        Route::post('/destroy/{id}', [StockController::class, 'destroy'])->name('branches.stock.destroy');
     });
 });

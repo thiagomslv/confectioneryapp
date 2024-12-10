@@ -16,6 +16,13 @@
                 <div class="ms-3 text-sm font-medium">
                     {{ flash.message }}
                 </div>
+
+                <button @click="flash.message = ''" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-3" aria-label="Close">
+                    <span class="sr-only">Close</span>
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                </button>
             </div>
         </div>
 
@@ -86,40 +93,35 @@
                             <form @submit.prevent="changeAmount(item.id, -1)">
                                 <button type="submit" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Retirar -1</button>
                             </form>
+
+                            <form @submit.prevent="deleteProduct(item.id)">
+                                <button type="submit" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Remover do estoque</button>
+                            </form>
                             
-                            <!-- <button type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Remover do estoque</button> -->
                         </td>
                     </tr>
-                    <!-- <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            Microsoft Surface Pro
-                        </th>
-                        <td class="px-6 py-4">
-                            1
-                        </td>
-
-                        <td class="px-6 py-4">
-                            <button type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Adicionar</button>
-                            <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Retirar</button>
-                            <button type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Remover do estoque</button>
-                        </td>
-                    </tr> -->
-                    
                 </tbody>
             </table>
         </div>
-
     </div>
 
-  
 </template>
+
+
 
 <script setup>
 
     import { reactive } from 'vue'
     import { router } from '@inertiajs/vue3'
 
+    import { onMounted } from 'vue'
+    import { initFlowbite } from 'flowbite'
+
     const props = defineProps({ stock: Object, branch_id: Number, flash: Object, errors: Object });
+
+    onMounted(() => {
+        initFlowbite();
+    });
 
     const form_AddProduct = reactive({
         name: null,
@@ -138,6 +140,11 @@
 
             qnt
         })
+    }
+
+    function deleteProduct(productId){
+
+        router.post(`/branches/stock/destroy/${productId}`);
     }
 
 </script>

@@ -89,6 +89,9 @@ class StockController extends Controller
 
             $product->amount = $res;
             $product->save();
+        }else{
+
+            return back()->with('message', 'Não é possível reduzir a quantidade quando o valor for zero!');
         } 
 
         return back()->with('message', 'Quantidade atualizada!');
@@ -99,6 +102,15 @@ class StockController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Product::find($id);
+
+        if(is_null($product)){
+
+            return back()->with('message', 'Produto não encontrado!');
+        }
+
+        $product->delete();
+
+        return back()->with('message', 'Produto removido do estoque!');
     }
 }
