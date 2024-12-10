@@ -7,6 +7,8 @@ use Inertia\Inertia;
 
 use App\Http\Requests\CreateBranchRequest;
 
+use App\Models\Branch;
+
 class BranchesController extends Controller
 {
     /**
@@ -30,7 +32,18 @@ class BranchesController extends Controller
      */
     public function store(CreateBranchRequest $request)
     {
-        //
+
+        $parsedLagLong = request('long')." ".request('lat');
+
+        Branch::create([
+
+            'name' => request('name'),
+            'address' => request('address'),
+            'phone' => request('phone'),
+            'location' => 'POINT('.$parsedLagLong.')'
+        ]);
+
+        return back()->with('message', 'Filial criada com sucesso!');
     }
 
     /**
