@@ -14,6 +14,7 @@ class Product extends Model
     protected $fillable = [
         'name',
         'amount',
+        'branch_id'
     ];
 
     public function branch(): BelongsTo

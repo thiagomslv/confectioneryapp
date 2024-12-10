@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
+use App\Http\Requests\StoreProductRequest;
+
 use App\Models\Branch;
+use App\Models\Product;
 
 //$branches[0]->stock()->get();
 
@@ -33,9 +36,17 @@ class StockController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        //
+
+        Product::create([
+
+            'name' => request('name'),
+            'amount' => request('amount'),
+            'branch_id' => request('branch_id')
+
+        ]);
+        return redirect()->route('branches.stock.show', ['id' => request('branch_id')])->with('message', 'Produto criado com sucesso!');
     }
 
     /**
@@ -52,7 +63,7 @@ class StockController extends Controller
 
         $stock = $branch->stock()->get();
 
-        return Inertia::render('Branches/ListStock', ['stock' => $stock]);
+        return Inertia::render('Branches/ListStock', ['stock' => $stock, 'branch_id' => $id]);
     }
 
     /**

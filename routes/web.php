@@ -19,5 +19,7 @@ Route::group(['prefix' => 'branches'], function (){
 
         Route::get('/', [StockController::class, 'index'])->name('branches.stock');
         Route::get('/show/{id}', [StockController::class, 'show'])->name('branches.stock.show');
+
+        Route::post('/store', [StockController::class, 'store'])->name('branches.stock.store');
     });
 });
