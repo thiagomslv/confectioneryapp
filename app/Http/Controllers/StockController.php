@@ -42,7 +42,7 @@ class StockController extends Controller
 
         Product::create([
 
-            'name' => request('name'),
+            'name' => strtoupper(request('name')),
             'amount' => request('amount'),
             'branch_id' => request('branch_id')
 
@@ -63,6 +63,20 @@ class StockController extends Controller
         }
 
         $stock = $branch->stock()->orderBy('id')->get();
+
+        return Inertia::render('Branches/ListStock', ['stock' => $stock, 'branch_id' => $id]);
+    }
+
+    public function searchProduct(string $id, String $name){
+
+        $branch = Branch::find($id);
+        if(is_null($branch)){
+        
+            //Retornar mensagem de erro.
+            return redirect()->route('branches.stock')->with('message', 'Filial não encontrada!');
+        }
+
+        $stock = $branch->stock()->where('name', 'LIKE', '%' . strtoupper($name) . '%')->get();
 
         return Inertia::render('Branches/ListStock', ['stock' => $stock, 'branch_id' => $id]);
     }
