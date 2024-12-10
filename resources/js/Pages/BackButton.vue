@@ -1,9 +1,16 @@
 <template>
   <div class="back">
 
-    <ion-icon name="chevron-back-outline"></ion-icon><Link href="/"> <span class="back-title">voltar</span></Link>
+        <ion-icon name="chevron-back-outline"></ion-icon><Link :href="linkToBack"> <span class="back-title">voltar</span></Link>
     </div>
 </template>
+
+
+<script setup>
+
+    const props = defineProps({ linkToBack: String });
+
+</script>
 
 <script>
     import { Link } from '@inertiajs/vue3';

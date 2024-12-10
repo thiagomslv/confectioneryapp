@@ -1,7 +1,7 @@
 <template>
 
     <Head title="Cadastro de filiais" />
-    <BackButton />
+    <BackButton linkToBack="/"/>
 
     <div class="cnt-add-branch">
 

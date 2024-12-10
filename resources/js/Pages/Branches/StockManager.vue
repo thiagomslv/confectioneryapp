@@ -2,7 +2,7 @@
 
     <Head title="Controle de estoque" />
 
-    <BackButton />
+    <BackButton linkToBack="/"/>
 
     <div class="cnt-search-branch">
 

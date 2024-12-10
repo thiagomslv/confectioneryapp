@@ -2,8 +2,7 @@
 
     <Head title="Controle de estoque" />
 
-    <BackButton />
-
+    <BackButton linkToBack="/branches/stock"/>
     
     <div class="px-3 mt-10 ">
 
