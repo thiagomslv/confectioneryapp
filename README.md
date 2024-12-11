@@ -1,66 +1,175 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<h1 align=center>Sistema de gerenciamento de filiais de confeitaria</h1>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 1 - Sobre
 
-## About Laravel
+O sistema de gerenciamento de filiais permite que administradores do sistema cadastrem filiais de uma confeitaria principal, além de permitir o controle de estoque dos insumos de cada uma das filiais. Essas filiais, por sua vez, podem ser vistas em um mapa. Ao clicar no pino da filial no mapa, é possível notar também detalhes sobre a filial em questão.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 2 - Tecnologias utilizadas
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Laravel (v11.x)
+- Inertia (v1.3)
+- JavaScript 
+- CSS
+- Leaflet (v1.9.4)
+- PostgreSQL (v15)
+- PostGIS (v3.3)
+- Flowbite (v2.5.2)
+- ionicons (v7.1.0)
+- Vue (v3.5.13)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 3 - Rotas da Aplicação
 
-## Learning Laravel
+Aqui é apresentada uma descrição detalhada de todas as rotas dos sistema.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+# Filiais [/branches]
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
++ /branches é um grupo de rotas responsável pelo gerenciamento das filiais no sistema.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Ver todas as filiais [GET  /branches]
 
-## Laravel Sponsors
++ Retorna uma view com todas as filiais cadastradas no sistema.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Cadastro de filial [GET  /branches/create]
 
-### Premium Partners
++ Retorna uma view com o formulário de cadastro de filiais no sistema.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Armazenar filial [POST  /branches/store]
 
-## Contributing
++ Rota de criação de novas filiais no sistema.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    + Atributos (object)
 
-## Code of Conduct
+        + name: nome da filial (string, required)
+        + address: endereço (string, required)
+        + phone: telefone (string, required)
+        + lat: latitude (string, required)
+        + long: longitude (string, required)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Editar filial [GET  /branches/edit/{id}]
 
-## Security Vulnerabilities
++ Retorna uma view com o formulário para edição de informações relacionadas a branch indicada pelo parâmetro id.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    + Parâmetros
 
-## License
+        + id: id da filial que se deseja editar (integer, required)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Salvar edições da filial [POST  /branches/update/{id}]
+
++ Rota para salvar mudanças nos dados das filiais no sistema.
+
+    + Parâmetros
+
+        + id: id da filial que se deseja editar (integer, required)
+
+    + Atributos (object)
+
+        + name: nome da filial (string, required)
+        + address: endereço (string, required)
+        + phone: telefone (string, required)
+        + lat: latitude (string, required)
+        + long: longitude (string, required)
+
+### Excluir filial [POST  /branches/destroy/{id}]
+
++ Rota para excluir filiais no sistema. A exclusão de uma filial também provoca a exclusão de seus itens no estoque.
+
+    + Parâmetros
+
+        + id: id da filial que se deseja excluir (integer, required)
+
+### Ver todas as filiais no mapa [GET  /branches/map]
+
++ Retorna uma view com a visualização em mapa de todas as filiais cadastradas no sistema.
+
+# Estoque [/branches/stock]
+
++ /branches/stock é um grupo de rotas responsável pelo gerenciamento do estoque das filiais no sistema.
+
+### Escolher filial para ver o estoque [GET  /branches/stock]
+
++ Retorna uma view para seleção de qual filial se deseja gerenciar o estoque.
+
+### Gerenciar estoque da filial [GET  /branches/stock/show/{id}]
+
++ Retorna uma view para gestão do estoque da filial informada pelo parâmetro id.
+
+    + Parâmetros
+
+        + id: id da filial que se deseja exibir o estoque (integer, required)
+
+### Adicionar produto no estoque [POST  /branches/stock/store]
+
++ Rota para adicionar produtos no estoque da filial.
+
+    + Atributos (object)
+
+        + name: nome do produto (string, required)
+        + amount: quantidade (integer, min 1, required)
+        + branch_id: id da branch para qual o produto será adicionado (integer, required)
+
+### Atualizar quantidade do produto no estoque [POST  /branches/stock/update/{id}]
+
++ Rota para atualizar a quantidade de um produto no estoque da filial.
+
+    + Parâmetros
+
+        + id: id do produto que se deseja atualizar a quantidade (integer, required)
+
+    + Atributos (object)
+
+        + qnt: quantidade a ser adicionada do produto (integer, min -1, max 1, required)
+
+### Excluir filial [POST  /branches/stock/destroy/{id}]
+
++ Rota para excluir produtos do estoque de filiais no sistema.
+
+    + Parâmetros
+
+        + id: id do produto que se deseja excluir (integer, required)
+
+### Pesquisar produto no estoque da filial [GET  /branches/search/{id}/{name}]
+
++ Rota para pesquisar produtos por nome no estoque da filial. Não é necessário digitar o nome todo, o sistema vai procurar produtos de acordo com partes do nome que for digitado.
+
+    + Parâmetros
+
+        + id: id da filial que se deseja procurar o produto (integer, required)
+        + name: nome do produto (string, required)
+
+## 4 - Como rodar o projeto
+
+```
+1. Faça o clone do repositório com o Git.
+
+$ git clone https://github.com/thiagomslv/confectioneryapp.git
+
+2. Crie um arquivo .env utilizando como modelo o arquivo .env.example
+
+3. Configure a conexão com o PostgreSQL dentro do arquivo .env
+
+4. Abra o terminal na pasta do arquivo e use o composer para baixar as dependências do projeto usando o comando
+    
+composer update
+
+5. Com a conexão do banco feita, execute as migrations para criação das tabelas usando o comando
+
+php artisan migrate
+
+6. Instale as dependências do JavaScript usando o comando
+
+npm install
+
+7. Execute o servidor de desenvolvimento para o JavaScript usando o comando
+
+npm run dev
+
+6. Execute o servidor de desenvolvimento para o PHP usando o comando
+
+php artisan serve
+
+7. Acesse a URL disponibilizada pelo servidor de desenvolvimento em 
+
+http://127.0.0.1:8000
+```
+
+<p align="center">De <a href="https://www.linkedin.com/in/thiagomslv/">Thiago Marques</a> para o mundo!</p>
