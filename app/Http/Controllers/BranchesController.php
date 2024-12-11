@@ -16,7 +16,7 @@ class BranchesController extends Controller
      */
     public function index()
     {
-        $branches = Branch::all();
+        $branches = Branch::orderBy('id', 'asc')->get();
 
         return Inertia::render('Branches/ListBranches', ['branches' => $branches]);
     }
@@ -61,15 +61,39 @@ class BranchesController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $branch = Branch::find($id);
+
+        if(is_null($branch)){
+
+            return redirect()->route('branches.index')->with('message', 'Filial não encontrada!');
+        }
+
+        return Inertia::render('Branches/EditBranch', ['branch' => $branch]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CreateBranchRequest $request, string $id)
     {
-        //
+        $branch = Branch::find($id);
+
+        if(is_null($branch)){
+
+            return redirect()->route('branches.index')->with('message', 'Filial não encontrada!');
+        }
+
+        $parsedLagLong = request('long')." ".request('lat');
+
+        $branch->update([
+
+            'name' => request('name'),
+            'address' => request('address'),
+            'phone' => request('phone'),
+            'location' => 'POINT('.$parsedLagLong.')'
+        ]);
+
+        return redirect()->route('branches.index')->with('message', 'Filial atualizada!');
     }
 
     /**
@@ -77,6 +101,15 @@ class BranchesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $branch = Branch::find($id);
+
+        if(is_null($branch)){
+
+            return back()->with('message', 'Filial não encontrada!');
+        }
+
+        $branch->delete();
+
+        return back()->with('message', 'A filial foi removida!');
     }
 }
