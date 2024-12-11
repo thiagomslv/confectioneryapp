@@ -143,7 +143,7 @@ Aqui é apresentada uma descrição detalhada de todas as rotas dos sistema.
 
 $ git clone https://github.com/thiagomslv/confectioneryapp.git
 
-2. Crie um arquivo .env utilizando como modelo o arquivo .env.example
+2. Entre na pasta confectioneryapp e crie um arquivo .env utilizando como modelo o arquivo .env.example
 
 3. Configure a conexão com o PostgreSQL dentro do arquivo .env
 
