@@ -149,7 +149,7 @@ $ git clone https://github.com/thiagomslv/confectioneryapp.git
 
 4. Abra o terminal na pasta do arquivo e use o composer para baixar as dependências do projeto usando o comando
     
-composer update
+composer install
 
 5. Com a conexão do banco feita, execute as migrations para criação das tabelas usando o comando
 
