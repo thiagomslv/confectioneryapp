@@ -20,6 +20,8 @@ Route::group(['prefix' => 'branches'], function (){
     Route::post('/update/{id}', [BranchesController::class, 'update'])->name('branches.update');
     Route::post('/destroy/{id}', [BranchesController::class, 'destroy'])->name('branches.destroy');
 
+    Route::get('/map', [BranchesController::class, 'branchesMap'])->name('branches.map');
+
     //Rotas para controle do estoque.
     Route::group(['prefix' => 'stock'], function (){
 

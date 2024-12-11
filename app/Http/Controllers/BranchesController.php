@@ -112,4 +112,11 @@ class BranchesController extends Controller
 
         return back()->with('message', 'A filial foi removida!');
     }
+
+    public function branchesMap(){
+
+        $branches = Branch::all();
+
+        return Inertia::render('Branches/MapBranches', ['branches' => $branches]);
+    }
 }
