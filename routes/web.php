@@ -12,9 +12,11 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'branches'], function (){
 
+    Route::get('/', [BranchesController::class, 'index'])->name('branches.index');
     Route::get('/create', [BranchesController::class, 'create'])->name('branches.create');
     Route::post('/store', [BranchesController::class, 'store'])->name('branches.store');
 
+    //Rotas para controle do estoque.
     Route::group(['prefix' => 'stock'], function (){
 
         Route::get('/', [StockController::class, 'index'])->name('branches.stock');

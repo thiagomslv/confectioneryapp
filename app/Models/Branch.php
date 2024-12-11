@@ -26,8 +26,8 @@ class Branch extends Model
     public function getLocationAttribute(): mixed
     {
         return self::select(
-            DB::raw("ST_Y(location::geometry) AS latitude"),
-            DB::raw("ST_X(location::geometry) AS longitude")
+            Branch::raw("ST_Y(location::geometry) AS lat"),
+            Branch::raw("ST_X(location::geometry) AS long")
         )->whereId($this->id)->first();
     }
 }

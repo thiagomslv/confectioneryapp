@@ -6,7 +6,7 @@
 
         <CardBox title="Cadastro de Filiais" iconType="add-outline" linkRedirect="/branches/create"/>
         <CardBox title="Controle de Estoque" iconType="cube-outline" linkRedirect="/branches/stock"/>
-        <CardBox title="Listar Filiais" iconType="business-outline" linkRedirect="/"/>
+        <CardBox title="Listar Filiais" iconType="business-outline" linkRedirect="/branches"/>
         <CardBox title="Mapa de Filiais" iconType="earth-outline" linkRedirect="/"/>
     </div>
 
